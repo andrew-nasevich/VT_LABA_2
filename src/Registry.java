@@ -1,9 +1,10 @@
 import java.util.List;
-import java.util.Date;
 
 public class Registry {
 
     private List<MedicalFile> MedicalFiles;
+
+    public Registry(){}
 
     public List<MedicalFile> getMedicalFiles() {
         return MedicalFiles;
@@ -11,17 +12,25 @@ public class Registry {
 
     public MedicalFile getCertainMedicalFile(Human human)
     {
-        for (MedicalFile mf: MedicalFiles)
+        if (human != null)
         {
-            if (mf.getName() == human.GetName() && mf.getBirthday() == human.GetBirthday())
-                return  mf;
+            for (MedicalFile mf : MedicalFiles)
+            {
+                if (mf.getName().equals(human.getName())  && mf.getBirthday().equals(human.getBirthday()) )
+                    return mf;
+            }
         }
-
         return null;
     }
 
-    public void AddMedicalFile(MedicalFile mf)
+    public MedicalFile addMedicalFile(Human human)
     {
-        MedicalFiles.add(mf);
+        if (human != null)
+        {
+            MedicalFile mf = new MedicalFile(human);
+            MedicalFiles.add(mf);
+            return mf;
+        }
+        return null;
     }
 }

@@ -1,25 +1,26 @@
-import java.security.PrivateKey;
-import java.util.Date;
-
 public class MedicalFile {
 
     private String medicalHistory;
     private String name;
-    private Date birthday;
+    private String birthday;
 
     public MedicalFile(Human human)
     {
-        medicalHistory = new String();
-        this.name = human.GetName();
-        this.birthday = human.GetBirthday();
+        if(human == null)
+        {
+            throw new ExceptionInInitializerError("Null pointer was received in MedicalFile class constructor.");
+        }
+
+        this.name = human.getName();
+        this.birthday = human.getBirthday();
     }
 
-    public String GetMedicalHistory()
+    public String getMedicalHistory()
     {
         return  medicalHistory;
     }
 
-    public void AddRecord(String record)
+    public void addRecord(String record)
     {
         medicalHistory += record;
     }
@@ -28,7 +29,7 @@ public class MedicalFile {
         return name;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 }
