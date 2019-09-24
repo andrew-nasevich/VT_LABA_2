@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Doctor {
     private String speciality;
 
@@ -14,11 +16,14 @@ public class Doctor {
         return speciality;
     }
 
-    public void visitTheDoctor(MedicalFile mf)
-    {
+    public void  setSpeciality(String speciality){
+        this.speciality = speciality;
+    }
+
+    public void visitTheDoctor(MedicalFile mf) throws IOException {
         if(mf != null)
         {
-            mf.addRecord("The patient visited the " + speciality + ".\n");
+            mf.addRecord("The patient visited the " + speciality);
         }
     }
 

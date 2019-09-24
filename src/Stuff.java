@@ -1,32 +1,66 @@
-import java.util.List;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Stuff {
 
-    private  List<Doctor> doctors;
+    private ArrayList<Doctor> doctors = new ArrayList<Doctor>();
+    private String pathToFile;
 
-    public Stuff() { }
+    public Stuff(String pathToFile) throws IOException {
 
-    public void addDoctor(String speciality)
-    {
-        if(speciality == null || speciality.trim().equals(""))
+        String readStr;
+
+        if (pathToFile == null)
+        {
+            throw new ExceptionInInitializerError("Incorrect path was received in Stuff class constructor.");
+        }
+
+        this.pathToFile = pathToFile;
+
+        File f = new File(pathToFile);
+        if(!f.exists())
+        {
+            f.createNewFile();
+            return;
+        }
+        FileReader fr = new FileReader(pathToFile);
+        BufferedReader br = new BufferedReader(fr);
+        while((readStr = br.readLine()) != null)
+        {
+            doctors.add(new Doctor(readStr));
+        }
+
+        fr.close();
+        br.close();
+    }
+
+    public void addDoctor(String speciality) throws IOException {
+        if(speciality == null)
             return;
 
-        if(!this.contains(speciality))
+        if(this.getCertainDoctor(speciality) == null) {
             doctors.add(new Doctor(speciality));
+
+            FileWriter fw = new FileWriter(pathToFile, true);
+            fw.write(speciality.concat("\n"));
+            fw.close();
+        }
     }
 
-    public void clearStuff()
-    {
+    public void clearStuff() throws IOException {
         doctors.clear();
+        FileWriter fw = new FileWriter(pathToFile, false);
+        fw.close();
     }
 
-    public List<Doctor> getDoctors()
+    public ArrayList<Doctor> getDoctors()
     {
         return doctors;
     }
 
-    public void removeDoctor(String speciality)
-    {
+    public void removeDoctor(String speciality) throws IOException {
+
+        boolean docWasRemoved = false;
         if(speciality == null || speciality.trim().equals(""))
             return;
 
@@ -35,27 +69,35 @@ public class Stuff {
             if (d.getSpeciality().equals(speciality))
             {
                 doctors.remove(d);
-                return;
+                docWasRemoved = true;
+                break;
+            }
+        }
+
+        if(docWasRemoved)
+        {
+            FileWriter fw = new FileWriter(pathToFile, false);
+            for (Doctor doctor:
+                    doctors) {
+                fw.write(doctor.getSpeciality().concat("\n"));
             }
         }
     }
 
-    public boolean contains(String speciality)
-    {
+    public Doctor getCertainDoctor(String speciality) {
         if(speciality == null || speciality.trim().equals(""))
-            return false;
+            return null;
 
         for (Doctor d:
                 doctors) {
             if (d.getSpeciality().equals(speciality))
-                return true;
+                return d;
         }
 
-        return false;
+        return null;
     }
 
-    public void visitDoctor(MedicalFile mf, String doctorsSpeciality)
-    {
+    public void visitDoctor(MedicalFile mf, String doctorsSpeciality) throws IOException {
 
         if (mf == null || doctorsSpeciality == null || doctorsSpeciality.trim().equals(""))
             return;
@@ -69,4 +111,8 @@ public class Stuff {
         }
     }
 
+    public String getPathToFile()
+    {
+        return  pathToFile;
+    }
 }

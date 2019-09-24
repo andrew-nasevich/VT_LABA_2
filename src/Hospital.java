@@ -1,23 +1,16 @@
-import java.util.List;
+import java.io.IOException;
 
 public class Hospital {
 
     private Registry registry;
     private Stuff stuff;
-    private List<Doctor> doctors;
 
-    public Hospital ()
-    {
-        registry = new Registry();
-        stuff = new Stuff();
-
-        stuff.addDoctor("surgeon");
-        stuff.addDoctor("therapist");
-        stuff.addDoctor("dermatologist");
+    public Hospital () throws IOException {
+        registry = new Registry("src/resources/medical files.txt");
+        stuff = new Stuff("src/resources/doctors.txt");
     }
 
-    public void visitDoctor(Human human, String doctorsSpeciality)
-    {
+    public void visitDoctor(Human human, String doctorsSpeciality) throws IOException {
         MedicalFile mf;
 
         if (human == null || doctorsSpeciality == null || doctorsSpeciality.trim().equals(""))
@@ -31,25 +24,20 @@ public class Hospital {
         stuff.visitDoctor(mf, doctorsSpeciality);
     }
 
-    public boolean addDoctor(String speciality)
-    {
+    public void addDoctor(String speciality) throws IOException {
         if(speciality == null || speciality.trim().equals(""))
-            return false;
+            return;
 
-        for (Doctor d:
-             doctors) {
-            if (d.getSpeciality().equals(speciality))
-                return false;
-        }
-
-        doctors.add(new Doctor(speciality));
-        return true;
-
+        stuff.addDoctor(speciality);
     }
 
-    public static void main(String[] args)
+    public Stuff getStuff()
     {
-        System.out.println("1");
+        return stuff;
     }
 
+    public Registry getRegistry()
+    {
+        return registry;
+    }
 }
