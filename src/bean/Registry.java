@@ -1,7 +1,6 @@
 package bean;
 
 import dao.DaoRegistry;
-import dao.DaoStuff;
 
 import java.util.ArrayList;
 import java.io.*;
@@ -23,19 +22,15 @@ public class Registry {
         }
         this.pathToFile = pathToFile;
 
-        ArrayList<String> records = DaoRegistry.readInitially(pathToFile);
+        ArrayList<MedicalFile> medicalFiles = DaoRegistry.readInitially(pathToFile);
 
-        if(records == null)
+        if (medicalFiles == null)
         {
+            this.medicalFiles = new ArrayList<MedicalFile>();
             return;
         }
 
-        i = 0;
-        while (i < records.size())
-        {
-            medicalFiles.add(new MedicalFile(new Human(records.get(i), records.get(i + 1)), records.get(i + 2), this));
-            i += 3;
-        }
+        this.medicalFiles = medicalFiles;
     }
 
 
@@ -61,7 +56,7 @@ public class Registry {
             MedicalFile mf = new MedicalFile(human, "", this);
             medicalFiles.add(mf);
 
-            DaoRegistry.addMedicalFile(pathToFile, human);
+            DaoRegistry.storeMedicalFiles(pathToFile, medicalFiles);
 
             return mf;
         }

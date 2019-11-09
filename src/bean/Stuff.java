@@ -2,19 +2,19 @@ package bean;
 
 import dao.DaoStuff;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.io.IOException;
 
 public class Stuff {
 
-    private ArrayList<Doctor> doctors = new ArrayList();
+    private ArrayList<Doctor> doctors;
     private String pathToFile;
 
     public Stuff(String pathToFile) throws IOException {
 
-        ArrayList<String> records;
+        ArrayList<Doctor> doctors;
 
         if (pathToFile == null)
         {
@@ -23,11 +23,15 @@ public class Stuff {
 
         this.pathToFile = pathToFile;
 
-        records = DaoStuff.ReadInitially(pathToFile);
-        for (String record:
-             records) {
-            doctors.add(new Doctor(record));
+        doctors = DaoStuff.ReadInitially(pathToFile);
+
+        if (doctors == null)
+        {
+            this.doctors = new ArrayList<Doctor>();
+            return;
         }
+
+        this.doctors = doctors;
     }
 
     public void addDoctor(String speciality) throws IOException {
@@ -36,7 +40,7 @@ public class Stuff {
 
         if(this.getCertainDoctor(speciality) == null) {
             doctors.add(new Doctor(speciality));
-            DaoStuff.addDoctor(pathToFile,speciality);
+            DaoStuff.storeDoctors(pathToFile, doctors);
         }
     }
 
