@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsolePresentation {
-    public static void present(Hospital hospital) throws IOException {
+    public void present(Hospital hospital) throws IOException {
 
         if(hospital == null)
             throw new ExceptionInInitializerError("Incorrect data was received in ConsolePresentation.present.");
@@ -18,14 +18,16 @@ public class ConsolePresentation {
         Registry registry = hospital.getRegistry();
         Stuff stuff = hospital.getStuff();
 
+        String NewName;
+        String NewBirthday;
         String name;
         String birthday;
         String speciality;
+        String newSpeciality;
         MedicalFile mf;
         Doctor doctor;
         int command = -1;
-        String current = new java.io.File( "." ).getCanonicalPath();
-        System.out.println("Current dir:"+current);
+
         System.out.println("Доступные действия:\n" +
                 "0) Выход\n" +
                 "1) Создать карточку пациента\n" +
@@ -55,18 +57,22 @@ public class ConsolePresentation {
                     name = scanner.nextLine();
                     birthday = scanner.nextLine();
 
-                    registry.addMedicalFile(new Human(name, birthday));
+                    registry.addMedicalFile(new Client(name, birthday));
                     break;
                 case (2):
-                    System.out.println(INPUT_PERSONAL_DATA);
+                    System.out.println("Введите имя и дату рождения ");
                     name = scanner.nextLine();
                     birthday = scanner.nextLine();
 
-                    mf = registry.getCertainMedicalFile(new Human(name, birthday));
+                    System.out.println(INPUT_PERSONAL_DATA);
+                    NewName = scanner.nextLine();
+                    NewBirthday = scanner.nextLine();
+
+                    mf = registry.getCertainMedicalFile(new Client(name, birthday));
                     if (mf != null)
                     {
-                        mf.setName(name);
-                        mf.setBirthday(birthday);
+                        mf.setClientName(NewName);
+                        mf.setBirthday(NewBirthday);
                     }
                     break;
                 case (3):
@@ -74,14 +80,14 @@ public class ConsolePresentation {
                     name = scanner.nextLine();
                     birthday = scanner.nextLine();
 
-                    registry.removeMedicalFile(new Human(name, birthday));
+                    registry.removeMedicalFile(new Client(name, birthday));
                     break;
                 case (4):
                     System.out.println(INPUT_PERSONAL_DATA);
                     name = scanner.nextLine();
                     birthday = scanner.nextLine();
 
-                    if(registry.getCertainMedicalFile(new Human(name, birthday)) == null)
+                    if(registry.getCertainMedicalFile(new Client(name, birthday)) == null)
                     {
                         System.out.println("Такой карточки нет");
                     }
@@ -95,7 +101,7 @@ public class ConsolePresentation {
                     birthday = scanner.nextLine();
                     speciality = scanner.nextLine();
 
-                    hospital.visitDoctor(new Human(name, birthday), speciality);
+                    hospital.visitDoctor(new Client(name, birthday), speciality);
                     break;
                 case (6):
                     System.out.println(INPUT_QUALIFICATION);
@@ -107,8 +113,11 @@ public class ConsolePresentation {
                     System.out.println(INPUT_QUALIFICATION);
                     speciality = scanner.nextLine();
 
+                    System.out.println("Введите новую профессиональную квалификацию");
+                    newSpeciality = scanner.nextLine();
+
                     doctor = stuff.getCertainDoctor(speciality);
-                    doctor.setSpeciality(speciality);
+                    doctor.setSpeciality(newSpeciality);
                     break;
                 case (8):
                     System.out.println(INPUT_QUALIFICATION);

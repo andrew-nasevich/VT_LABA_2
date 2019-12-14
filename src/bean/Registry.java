@@ -1,84 +1,55 @@
 package bean;
 
-import dao.DaoRegistry;
-
 import java.util.ArrayList;
 import java.io.*;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Registry {
 
-    private ArrayList<MedicalFile> medicalFiles = new ArrayList();
-    private String pathToFile;
+    private ArrayList<Client> clients;
 
-    public Registry(String pathToFile) throws IOException {
+    public Registry(ArrayList<Client> clients) throws IOException {
 
-        int i;
-
-        if (pathToFile == null)
+        if (clients == null)
         {
-            throw new ExceptionInInitializerError("Incorrect path was received in bean.Stuff class constructor.");
-        }
-        this.pathToFile = pathToFile;
-
-        ArrayList<MedicalFile> medicalFiles = DaoRegistry.readInitially(pathToFile);
-
-        if (medicalFiles == null)
-        {
-            this.medicalFiles = new ArrayList<MedicalFile>();
+            this.clients = new ArrayList<Client>();
             return;
         }
 
-        this.medicalFiles = medicalFiles;
+        this.clients = clients;
     }
 
 
-    public List getMedicalFiles() {
-        return medicalFiles;
+    public List getClients() {
+        return clients;
     }
 
-    public MedicalFile getCertainMedicalFile(Human human) {
-        if (human != null)
+    public Client getClientByName(String name) {
+        for (Client c : clients)
         {
-            for (MedicalFile mf : medicalFiles)
-            {
-                if (mf.getName().equals(human.getName())  && mf.getBirthday().equals(human.getBirthday()) )
-                    return mf;
-            }
+            if (c.getName() == name)
+                return c;
         }
         return null;
     }
 
-    public MedicalFile addMedicalFile(Human human) throws IOException {
-        if (human != null)
+    public void addClient(Client client) throws IOException {
+        if (client != null)
         {
-            MedicalFile mf = new MedicalFile(human, "", this);
-            medicalFiles.add(mf);
-
-            DaoRegistry.storeMedicalFiles(pathToFile, medicalFiles);
-
-            return mf;
+            clients.add(client);
         }
-        return null;
+        return;
     }
 
-    public void storeMedicalFiles() throws IOException {
-        DaoRegistry.storeMedicalFiles(pathToFile, medicalFiles);
+    public void removeClient(Client client) {
+        clients.remove(client);
     }
 
-    public String getPathToFile() {
-        return pathToFile;
-    }
-
-    public void removeMedicalFile(Human human) {
-        medicalFiles.remove(getCertainMedicalFile(human));
-    }
-
-    public void sort() throws IOException {
-        Collections.sort(medicalFiles, MedicalFile::compareTo);
-
-        DaoRegistry.storeMedicalFiles(pathToFile, medicalFiles);
+    public void sort(Comparator<Client> comparator) throws IOException {
+        if(comparator != null) {
+            clients.sort(comparator);
+        }
     }
 
     @Override
@@ -92,14 +63,14 @@ public class Registry {
 
         Registry that = (Registry) o;
 
-        if (that.pathToFile != pathToFile || that.getMedicalFiles().size() != medicalFiles.size())
+        if (that.getClients().size() != clients.size())
             return  false;
 
-        List<MedicalFile> thatMedicalFiles = that.getMedicalFiles();
+        List<Client> thatClients = that.getClients();
 
-        for(int i = 0; i <= medicalFiles.size(); i ++)
+        for(int i = 0; i <= clients.size(); i ++)
         {
-            if(!thatMedicalFiles.get(i).equals(medicalFiles.get(i)))
+            if(!clients.get(i).equals(clients.get(i)))
                 return false;
         }
 
@@ -108,13 +79,12 @@ public class Registry {
 
     @Override
     public int hashCode() {
-        return medicalFiles.hashCode() * pathToFile.hashCode() * 11;
+        return clients.hashCode();
     }
 
     @Override
     public String toString() {
-        return "MedicalFile{" +
-                "medicalFiles = '" + medicalFiles.toString() + ", " +
-                "pathToFile = " + pathToFile + '}';
+        return "Registry{" +
+                "Clients = '" + clients.toString();
     }
 }

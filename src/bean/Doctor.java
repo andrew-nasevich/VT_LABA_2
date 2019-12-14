@@ -22,10 +22,10 @@ public class Doctor implements java.io.Serializable, Comparable<Doctor>{
         this.speciality = speciality;
     }
 
-    public void  visitTheDoctor(MedicalFile mf) throws IOException {
+    public void  visitTheDoctor(Registry registry, MedicalFile mf) throws IOException {
         if(mf != null)
         {
-            mf.addRecord("The patient visited the " + speciality);
+            registry.addRecord(mf, "The patient visited the " + speciality);
         }
     }
 
@@ -49,7 +49,6 @@ public class Doctor implements java.io.Serializable, Comparable<Doctor>{
         return speciality.hashCode() * 11;
     }
 
-    //Переопределенный метод toString()
     @Override
     public String toString() {
         return "Doctor{" +

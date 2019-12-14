@@ -1,13 +1,15 @@
 package bean;
 
-public class Human {
+public class Client {
 
+    private int id;
     private String name;
     private String birthday;
+    private MedicalFile medicalFile;
 
-    public  Human(){}
+    public Client(){}
 
-    public Human(String name, String birthday)
+    public Client(int id, String name, String birthday)
     {
         if ( name == null || name.trim().equals(""))
         {
@@ -16,6 +18,9 @@ public class Human {
 
         this.name = name;
         this.birthday = birthday;
+        this.id = id;
+
+        medicalFile = new MedicalFile("", id);
     }
 
     public String getName()
@@ -23,9 +28,25 @@ public class Human {
         return name;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     public String getBirthday()
     {
         return birthday;
+    }
+
+    public void setBirthday(String birthday){
+        this.birthday = birthday;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -37,7 +58,7 @@ public class Human {
             return false;
         }
 
-        Human that = (Human) o;
+        Client that = (Client) o;
 
         return that.birthday == birthday && that.name == name;
     }
@@ -53,5 +74,13 @@ public class Human {
         return "Human{" +
                 "name = '" + name + ", " +
                 "birthday = " + birthday + '}';
+    }
+
+    public MedicalFile getMedicalFile() {
+        return medicalFile;
+    }
+
+    public void setMedicalFile(MedicalFile medicalFile) {
+        this.medicalFile = medicalFile;
     }
 }

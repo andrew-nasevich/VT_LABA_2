@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="clients" type="clientsType"/>
+	<xs:complexType name="MedicalFile">
+		<xs:sequence>
+			<xs:element type="xs:integer" name="clientId"/>
+			<xs:element type="xs:string" name="medicalHistory"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="clientType">
+		<xs:sequence>
+			<xs:element type="xs:integer" name="id"/>
+			<xs:element type="xs:string" name="name"/>
+			<xs:element type="xs:string" name="birthday"/>
+			<xs:element type="MedicalFile" name="medicalFile" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="clientsType">
+		<xs:sequence>
+			<xs:element type="clientType" name="client" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,7 +1,6 @@
 package bean;
 
-import dao.DaoStuff;
-
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,27 +9,12 @@ import java.io.IOException;
 public class Stuff {
 
     private ArrayList<Doctor> doctors;
-    private String pathToFile;
 
-    public Stuff(String pathToFile) throws IOException {
-
-        ArrayList<Doctor> doctors;
-
-        if (pathToFile == null)
-        {
-            throw new ExceptionInInitializerError("Incorrect path was received in bean.Stuff class constructor.");
-        }
-
-        this.pathToFile = pathToFile;
-
-        doctors = DaoStuff.ReadInitially(pathToFile);
-
+    public Stuff(ArrayList<Doctor> doctors) throws IOException {
         if (doctors == null)
         {
-            this.doctors = new ArrayList<Doctor>();
-            return;
+            throw new ExceptionInInitializerError("Incorrect doctors was received in bean.Stuff class constructor.");
         }
-
         this.doctors = doctors;
     }
 
@@ -40,39 +24,15 @@ public class Stuff {
 
         if(this.getCertainDoctor(speciality) == null) {
             doctors.add(new Doctor(speciality));
-            DaoStuff.storeDoctors(pathToFile, doctors);
         }
     }
 
-    public void clearStuff() throws IOException {
-        doctors.clear();
-        DaoStuff.clearStuff(pathToFile);
-    }
-
-    public List getDoctors() {
+    public List<Doctor> getDoctors() {
         return doctors;
     }
 
-    public void removeDoctor(String speciality) throws IOException {
-
-        boolean docWasRemoved = false;
-        if(speciality == null || speciality.trim().equals(""))
-            return;
-
-        for (Doctor d:
-                doctors) {
-            if (d.getSpeciality().equals(speciality))
-            {
-                doctors.remove(d);
-                docWasRemoved = true;
-                break;
-            }
-        }
-
-        if(docWasRemoved)
-        {
-            DaoStuff.storeDoctors(pathToFile, doctors);
-        }
+    public void removeDoctor(Doctor doctor) throws IOException {
+        doctors.remove(doctor);
     }
 
     public Doctor getCertainDoctor(String speciality) {
@@ -88,31 +48,6 @@ public class Stuff {
         return null;
     }
 
-    public void visitDoctor(MedicalFile mf, String doctorsSpeciality) throws IOException {
-
-        if (mf == null || doctorsSpeciality == null || doctorsSpeciality.trim().equals(""))
-            return;
-
-        for (Doctor d :
-                doctors) {
-            if (d.getSpeciality().equals(doctorsSpeciality)) {
-                d.visitTheDoctor(mf);
-                return;
-            }
-        }
-    }
-
-    public String getPathToFile()
-    {
-        return  pathToFile;
-    }
-
-    public void sort() throws IOException {
-        Collections.sort(doctors, Doctor::compareTo);
-
-        DaoStuff.storeDoctors(pathToFile, doctors);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -124,7 +59,7 @@ public class Stuff {
 
         Stuff that = (Stuff) o;
 
-        if (that.pathToFile != pathToFile || that.getDoctors().size() != getDoctors().size())
+        if (that.getDoctors().size() != getDoctors().size())
             return  false;
 
         List<Doctor> thatDoctors = that.getDoctors();
@@ -140,13 +75,12 @@ public class Stuff {
 
     @Override
     public int hashCode() {
-        return doctors.hashCode() * pathToFile.hashCode() * 11;
+        return doctors.hashCode();
     }
 
     @Override
     public String toString() {
         return "Stuff{" +
-                "doctors = '" + doctors.toString() + ", " +
-                "pathToFile = " + pathToFile + '}';
+                "doctors = '" + doctors.toString();
     }
 }

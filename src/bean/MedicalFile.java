@@ -1,27 +1,16 @@
 package bean;
 
-import java.io.IOException;
+public class MedicalFile implements java.io.Serializable, Comparable<MedicalFile>{
 
-public class MedicalFile implements Comparable<MedicalFile>{
-
+    private int clientId;
     private String medicalHistory;
-    private String name;
-    private String birthday;
-    private Registry medicalFileHolder ;
 
     public MedicalFile(){}
 
-    public MedicalFile(Human human, String medicalHistory, Registry medicalFileHolder)
+    public MedicalFile(String medicalHistory, int clientId)
     {
-        if(human == null)
-        {
-            throw new ExceptionInInitializerError("Null pointer was received in bean.MedicalFile class constructor.");
-        }
-
-        this.name = human.getName();
-        this.birthday = human.getBirthday();
         this.medicalHistory = medicalHistory;
-        this.medicalFileHolder = medicalFileHolder;
+        this.clientId = clientId;
     }
 
     public String getMedicalHistory()
@@ -29,33 +18,22 @@ public class MedicalFile implements Comparable<MedicalFile>{
         return  medicalHistory;
     }
 
-    public void addRecord(String record) throws IOException {
+    public void addRecord(String record) {
         medicalHistory += record;
-
-        medicalFileHolder.storeMedicalFiles();
     }
 
-    public String getName() {
-        return name;
+
+    public int getClientId() {
+        return clientId;
     }
 
-    public void setName(String name)
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public String toFormattedString()
     {
-        this.name  = name;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday)
-    {
-        this.birthday  = birthday;
-    }
-
-    public String toFormatedString()
-    {
-        return name + " " + birthday + "\n" + medicalHistory;
+        return clientId + "\n" + medicalHistory;
     }
 
     @Override
@@ -69,39 +47,29 @@ public class MedicalFile implements Comparable<MedicalFile>{
 
         MedicalFile that = (MedicalFile) o;
 
-        return medicalFileHolder.equals(that.medicalFileHolder) && name == that.name &&
-                that.birthday == birthday && that.medicalHistory == medicalHistory;
+        return that.clientId == clientId && that.medicalHistory == medicalHistory;
     }
 
     @Override
     public int hashCode() {
-        return medicalFileHolder.hashCode() * name.hashCode() *
-                birthday.hashCode() * medicalHistory.hashCode() * 11;
+        return clientId *  medicalHistory.hashCode() * 11;
     }
 
     @Override
     public String toString() {
         return "MedicalFile{" +
-                "name = '" + name + ", " +
-                "birthday = " + birthday + ", " +
-                "medicalHistory" + medicalHistory +'}';
+                "medicalHistory" + medicalHistory +
+                "id = " + clientId +'}';
     }
 
     @Override
     public int compareTo(MedicalFile o) {
-        if(o.name.compareTo(name) != 0)
-            return o.name.compareTo(name);
-
-        if(o.birthday.compareTo(birthday) != 0)
-            return o.birthday.compareTo(birthday);
+        if(o.clientId != clientId)
+            return clientId - o.clientId;
 
         if(o.medicalHistory.compareTo(medicalHistory) != 0)
             return o.medicalHistory.compareTo(medicalHistory);
 
-        if(o.medicalFileHolder.equals(medicalFileHolder))
-            return 0;
-        else
-            return 1;
-
+        return 0;
     }
 }

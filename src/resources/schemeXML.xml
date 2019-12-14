@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><clients>
+    <client>
+        <id>1</id>
+        <name>Ace</name>
+        <birthday>"12.12.12"</birthday>
+        <MedicalFile>
+            <clientId>1</clientId>
+            <medicalHistory>""</medicalHistory>
+        </MedicalFile>
+    </client>
+    <client>
+        <id>2</id>
+        <name>Andrew</name>
+        <birthday>"17.07.00"</birthday>
+        <MedicalFile>
+            <clientId>2</clientId>
+            <medicalHistory>"He is not ready to got to the army"</medicalHistory>
+        </MedicalFile>
+    </client>
+</clients>

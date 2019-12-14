@@ -6,27 +6,30 @@ import java.util.ArrayList;
 public class Serialization<T>{
 
     @SuppressWarnings("unchecked")
-    public ArrayList<T> deserialize(String filePath){
+    public ArrayList<T> deserialize(String filePath) throws IOException {
         ArrayList<T> list = null;
+
+        // Reading the object from a file
+        File f = new File(filePath);
+        FileInputStream file = new FileInputStream(f.getAbsolutePath());
+        ObjectInputStream in = new ObjectInputStream(file);
+
         try
         {
-            // Reading the object from a file
-            FileInputStream file = new FileInputStream(filePath);
-            ObjectInputStream in = new ObjectInputStream(file);
-
             // Method for deserialization of object
             list = (ArrayList<T>)in.readObject();
-
-            in.close();
-            file.close();
         }
         catch(IOException ex)
         {
-            System.out.println("IOException is caught");
+            System.out.println("IOException" +ex.getMessage()+" is caught");
         }
         catch(ClassNotFoundException ex)
         {
             System.out.println("ClassNotFoundException is caught");
+        }
+        finally {
+            in.close();
+            file.close();
         }
         return list;
     }
@@ -35,7 +38,8 @@ public class Serialization<T>{
         try
         {
             //Saving of object in a file
-            FileOutputStream file = new FileOutputStream(filePath);
+            File f = new File(filePath);
+            FileOutputStream file = new FileOutputStream(f.getAbsoluteFile());
             ObjectOutputStream out = new ObjectOutputStream(file);
 
             // Method for serialization of object
@@ -46,7 +50,7 @@ public class Serialization<T>{
         }
         catch(IOException ex)
         {
-            System.out.println("IOException is caught");
+            System.out.println("IOException is caught "+ex.getMessage());
         }
     }
 }
