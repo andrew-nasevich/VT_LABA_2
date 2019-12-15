@@ -2,13 +2,13 @@ package Service;
 
 import bean.Client;
 import dao.DaoClient;
-import controller.*;
+//import controller.*;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ClientService extends Service<Client> {
+public class ClientService implements Service<Client> {
     private static final String NOT_FOUND = "Client not found.";
 
     private DaoClient daoClient;
@@ -28,8 +28,8 @@ public class ClientService extends Service<Client> {
         }
 
         daoClient.add(item);
-        DBController dbcontroller = new DBController();
-        dbcontroller.addInDB(item.getId(),item.getName(),item.getSurname(),item.getMobilePhone(),item.getRoom().getNumberOfRoom(),item.getRoom().getPrice());
+        //DBController dbcontroller = new DBController();
+        //dbcontroller.addInDB(item.getId(),item.getName(),item.getSurname(),item.getMobilePhone(),item.getRoom().getNumberOfRoom(),item.getRoom().getPrice());
         //dbcontroller.addInDB(item);
     }
 
@@ -44,8 +44,8 @@ public class ClientService extends Service<Client> {
             if (x.getId() == item.getId()) {
                 daoClient.delete(x);
                 daoClient.add(item);
-                DBController dbcontroller = new DBController();
-                dbcontroller.updateInDB(item.getId(),item.getSurname());
+               // DBController dbcontroller = new DBController();
+                // dbcontroller.updateInDB(item.getId(),item.getSurname());
                 //dbcontroller.updateInDB(item);
                 return;
             }
@@ -57,16 +57,16 @@ public class ClientService extends Service<Client> {
     @Override
     public void delete(int id) {
         daoClient.delete(daoClient.get(id));
-        DBController dbcontroller = new DBController();
-        dbcontroller.deleteFromDB(id);
+        //DBController dbcontroller = new DBController();
+        //dbcontroller.deleteFromDB(id);
         //dbcontroller.deleteFromDB(id);
     }
 
     public void migrationAll() throws ServiceException {
         List<Client> clients = daoClient.getAll();
-        DBController dbcontroller = new DBController();
+       // DBController dbcontroller = new DBController();
         for(Client item:clients){
-            dbcontroller.addInDB(item.getId(),item.getName(),item.getSurname(),item.getMobilePhone(),item.getRoom().getNumberOfRoom(),item.getRoom().getPrice());
+           // dbcontroller.addInDB(item.getId(),item.getName(),item.getSurname(),item.getMobilePhone(),item.getRoom().getNumberOfRoom(),item.getRoom().getPrice());
 
         }
     }
@@ -91,7 +91,7 @@ public class ClientService extends Service<Client> {
     }
 
     public void findClientInBase(int id){
-        daoClient.findById(id);
+       // daoClient.findById(id);
     }
 
 }

@@ -25,7 +25,7 @@ public class Doctor implements java.io.Serializable, Comparable<Doctor>{
     public void  visitTheDoctor(Registry registry, MedicalFile mf) throws IOException {
         if(mf != null)
         {
-            registry.addRecord(mf, "The patient visited the " + speciality);
+            mf.addRecord("The patient visited the " + speciality);
         }
     }
 

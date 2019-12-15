@@ -29,8 +29,8 @@ public class ClientXmlParser implements XmlParser<Client> {
     private static final String ID = "id";
     private static final String NAME = "name";
     private static final String BIRTHDAY = "birthday";
-    private static final String MEDICAL_FILE = "MedicalFile";
-    private static final String CLIENT_ID = "clientID";
+    private static final String MEDICAL_FILE = "medicalFile";
+    private static final String CLIENT_ID = "clientId";
     private static final String MEDICAL_HISTORY = "medicalHistory";
 
     private DocumentBuilder documentBuilder;

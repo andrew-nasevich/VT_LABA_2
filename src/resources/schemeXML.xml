@@ -3,18 +3,18 @@
         <id>1</id>
         <name>Ace</name>
         <birthday>"12.12.12"</birthday>
-        <MedicalFile>
+        <medicalFile>
             <clientId>1</clientId>
             <medicalHistory>""</medicalHistory>
-        </MedicalFile>
+        </medicalFile>
     </client>
     <client>
         <id>2</id>
         <name>Andrew</name>
         <birthday>"17.07.00"</birthday>
-        <MedicalFile>
+        <medicalFile>
             <clientId>2</clientId>
             <medicalHistory>"He is not ready to got to the army"</medicalHistory>
-        </MedicalFile>
+        </medicalFile>
     </client>
 </clients>
