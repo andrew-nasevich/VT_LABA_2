@@ -3,7 +3,7 @@ package Service;
 import bean.Client;
 import bean.Doctor;
 import dao.DaoClient;
-//import controller.*;
+import controller.*;
 
 import javax.print.Doc;
 import java.io.IOException;
@@ -84,9 +84,9 @@ public class ClientService implements Service<Client> {
 
     public void migrationAll() throws ServiceException {
         List<Client> clients = daoClient.getAll();
-       // DBController dbcontroller = new DBController();
-        for(Client item:clients){
-           // dbcontroller.addInDB(item.getId(),item.getName(),item.getSurname(),item.getMobilePhone(),item.getRoom().getNumberOfRoom(),item.getRoom().getPrice());
+       DBController dbcontroller = new DBController();
+        for(Client item :clients){
+            dbcontroller.addInDB(item);
 
         }
     }

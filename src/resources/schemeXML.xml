@@ -2,7 +2,7 @@
     <client>
         <id>2</id>
         <name>Andrew</name>
-        <birthday>Andrew</birthday>
+        <birthday>"17.07.00"</birthday>
         <medicalFile>
             <clientId>2</clientId>
             <medicalHistory>"He is not ready to got to the army"The patient visited the SurgeonThe patient visited the Surgeon</medicalHistory>
@@ -11,7 +11,7 @@
     <client>
         <id>101</id>
         <name>Vera</name>
-        <birthday>Vera</birthday>
+        <birthday>"12.12.99"</birthday>
         <medicalFile>
             <clientId>101</clientId>
             <medicalHistory/>
