@@ -9,9 +9,9 @@ public class Hospital  {
     private Registry registry;
     private Stuff stuff;
 
-    public Hospital (ArrayList<Client> clients, ArrayList<Doctor> doctors) throws IOException {
+    public Hospital (ArrayList<Client> clients) throws IOException {
         registry = new Registry(clients);
-        stuff = new Stuff(doctors);
+        stuff = new Stuff();
     }
 
     public Stuff getStuff()

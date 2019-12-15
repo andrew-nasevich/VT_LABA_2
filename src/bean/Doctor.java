@@ -22,9 +22,10 @@ public class Doctor implements java.io.Serializable, Comparable<Doctor>{
         this.speciality = speciality;
     }
 
-    public void  visitTheDoctor(Registry registry, MedicalFile mf) throws IOException {
-        if(mf != null)
+    public void  visitTheDoctor(Client client) throws IOException {
+        if(client != null)
         {
+            MedicalFile mf = client.getMedicalFile();
             mf.addRecord("The patient visited the " + speciality);
         }
     }

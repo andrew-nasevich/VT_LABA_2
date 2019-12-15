@@ -10,11 +10,13 @@ public class Stuff {
 
     private ArrayList<Doctor> doctors;
 
-    public Stuff(ArrayList<Doctor> doctors) throws IOException {
-        if (doctors == null)
-        {
-            throw new ExceptionInInitializerError("Incorrect doctors was received in bean.Stuff class constructor.");
-        }
+    public Stuff() throws IOException {
+
+        var doctors = new ArrayList<Doctor>();
+        doctors.add(new Doctor("Surgeon"));
+        doctors.add(new Doctor("Therapist"));
+        doctors.add(new Doctor("Dentist"));
+
         this.doctors = doctors;
     }
 
